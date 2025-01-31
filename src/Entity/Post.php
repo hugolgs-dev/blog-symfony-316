@@ -29,6 +29,9 @@ class Post
     #[ORM\Column(length: 255)]
     private ?string $author = null;
 
+    #[ORM\Column]
+    private ?int $category_id = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -90,6 +93,18 @@ class Post
     public function setAuthor(string $author): static
     {
         $this->author = $author;
+
+        return $this;
+    }
+
+    public function getCategoryId(): ?int
+    {
+        return $this->category_id;
+    }
+
+    public function setCategoryId(int $category_id): static
+    {
+        $this->category_id = $category_id;
 
         return $this;
     }

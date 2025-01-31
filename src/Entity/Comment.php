@@ -24,10 +24,13 @@ class Comment
     private ?\DateTimeImmutable $updatedAt = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $user = null;
+    private ?int $user_id = null;
 
     #[ORM\Column]
     private ?bool $isReported = null;
+
+    #[ORM\Column]
+    private ?int $category_id = null;
 
     public function getId(): ?int
     {
@@ -72,12 +75,12 @@ class Comment
 
     public function getUser(): ?string
     {
-        return $this->user;
+        return $this->user_id;
     }
 
     public function setUser(string $user): static
     {
-        $this->user = $user;
+        $this->user_id = $user;
 
         return $this;
     }
@@ -90,6 +93,18 @@ class Comment
     public function setIsReported(bool $isReported): static
     {
         $this->isReported = $isReported;
+
+        return $this;
+    }
+
+    public function getCategoryId(): ?int
+    {
+        return $this->category_id;
+    }
+
+    public function setCategoryId(int $category_id): static
+    {
+        $this->category_id = $category_id;
 
         return $this;
     }

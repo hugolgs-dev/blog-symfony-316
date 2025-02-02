@@ -10,3 +10,7 @@ app_login:
 app_logout:
     path: /logout
     controller: App\Controller\AuthController::logout
+
+app_register:
+    path: /register
+    controller: App\Controller\RegistrationController::register

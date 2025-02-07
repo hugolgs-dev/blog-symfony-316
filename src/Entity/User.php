@@ -6,10 +6,11 @@ use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface; // Ajout de l'interface
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
-class User implements UserInterface
+class User implements UserInterface, PasswordAuthenticatedUserInterface // Implémentation de PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -22,38 +23,36 @@ class User implements UserInterface
     #[ORM\Column(length: 255)]
     private ?string $password = null;
 
-    // Add other necessary fields and methods
+    #[ORM\Column(type: 'json')]
+    private array $roles = ['ROLE_USER']; // Par défaut, un utilisateur a le rôle "ROLE_USER"
+
+    // Autres champs et méthodes
 
     public function getRoles(): array
     {
-        // Return an array of roles, e.g., ['ROLE_USER']
-        return ['ROLE_USER'];
+        return $this->roles;
     }
 
     public function getPassword(): string
     {
-        // Return the hashed password
         return $this->password;
     }
 
     public function getSalt(): ?string
     {
-        // Not needed if using modern hashing algorithms
         return null;
     }
 
     public function eraseCredentials(): void
     {
-        // If you store any temporary, sensitive data on the user, clear it here
     }
 
     public function getUserIdentifier(): string
     {
-        // Return the identifier used to authenticate (e.g., email)
         return $this->email;
     }
 
-    // Add getters and setters for your fields
+    // Getters et setters
 
     public function getId(): ?int
     {
@@ -74,6 +73,12 @@ class User implements UserInterface
     public function setPassword(string $password): self
     {
         $this->password = $password;
+        return $this;
+    }
+
+    public function setRoles(array $roles): self
+    {
+        $this->roles = $roles;
         return $this;
     }
 }

@@ -1,3 +1,16 @@
+
 home:
     path: /
     controller: App\Controller\HomeController::home
+
+app_login:
+    path: /login
+    controller: App\Controller\AuthController::login
+
+app_logout:
+    path: /logout
+    controller: App\Controller\AuthController::logout
+
+app_register:
+    path: /register
+    controller: App\Controller\RegistrationController::register

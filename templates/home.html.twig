@@ -4,5 +4,13 @@
 
 {% block body %}
     <h1>Page d'accueil</h1>
-    <p>Ceci est une page d'accueil minimale en Symfony.</p>
+    {% if app.user %}
+        <!-- si l'utilisateur est connecté -->
+        <p>Bonjour, {{ app.user.email }} !</p>
+        <a href="{{ path('app_logout') }}">Se déconnecter</a>
+    {% else %}
+        <!-- si l'utilisateur n'est pas connecté -->
+        <a href="{{ path('app_login') }}">Se connecter</a> |
+        <a href="{{ path('app_register') }}">S'inscrire</a>
+    {% endif %}
 {% endblock %}

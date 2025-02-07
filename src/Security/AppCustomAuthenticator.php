@@ -26,35 +26,41 @@ class AppCustomAuthenticator extends AbstractLoginFormAuthenticator
     {
     }
 
+    // récupérer email et mot de passe pour l'authentification
     public function authenticate(Request $request): Passport
     {
-        $email = $request->getPayload()->getString('email');
+        $email = $request->get('email');
+        $password = $request->get('password');
 
+        // enregistrer l'email pour l'afficher dans le formulaire de login
         $request->getSession()->set(SecurityRequestAttributes::LAST_USERNAME, $email);
 
+        // créer un passport pour l'authentification
         return new Passport(
-            new UserBadge($email),
-            new PasswordCredentials($request->getPayload()->getString('password')),
+            new UserBadge($email), 
+            new PasswordCredentials($password),  
             [
-                new CsrfTokenBadge('authenticate', $request->getPayload()->getString('_csrf_token')),
-                new RememberMeBadge(),
+                new CsrfTokenBadge('authenticate', $request->get('_csrf_token')), 
             ]
         );
     }
 
+    // après une authentification réussie, rediriger l'utilisateur
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
+        
         if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
             return new RedirectResponse($targetPath);
         }
 
-        // For example:
-        // return new RedirectResponse($this->urlGenerator->generate('some_route'));
-        throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
+        // rediriger vers la page d'accueil
+        return new RedirectResponse($this->urlGenerator->generate('home')); 
     }
 
+    // obtenir l'URL de la page de login
     protected function getLoginUrl(Request $request): string
     {
         return $this->urlGenerator->generate(self::LOGIN_ROUTE);
     }
 }
+

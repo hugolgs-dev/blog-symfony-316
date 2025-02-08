@@ -14,3 +14,11 @@ app_logout:
 app_register:
     path: /register
     controller: App\Controller\RegistrationController::register
+
+admin_dashboard:
+    path: /admin
+    controller: App\Controller\Admin\DashboardController::index
+
+admin_posts:
+    path: /admin/post
+    controller: App\Controller\Admin\PostController::post

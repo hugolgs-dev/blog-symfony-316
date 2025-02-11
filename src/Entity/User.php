@@ -36,7 +36,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function __construct()
     {
         $this->comments = new ArrayCollection();
-        $this->roles = ['ROLE_USER'];
     }
 
     public function getId(): ?int
@@ -82,7 +81,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getRoles(): array
     {
-        return array_unique(array_merge($this->roles, ['ROLE_USER']));
+        if (in_array('ROLE_ADMIN', $this->roles)) {
+            return $this->roles;
+        }
+        return $this->roles = ['ROLE_USER'];
     }
 
     public function setRoles(array $roles): static

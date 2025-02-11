@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit User{% endblock %}
+
+{% block body %}
+    <div class="container max-w-2xl p-6 mx-auto">
+           <div class="flex items-center justify-between">
+            <!-- Back to list as an arrow -->
+            <a href="{{ path('app_user_index') }}" 
+               class="text-3xl text-purple-600 hover:text-purple-800">
+                &larr; 
+            </a>
+        </div>
+        <h1 class="mb-6 text-2xl font-bold text-purple-700">Edit User</h1>
+
+        <div class="p-6 bg-white shadow-md">
+            <!-- Include the form with the update button -->
+            {{ include('user/_form.html.twig', {'button_label': 'Update'}) }}
+            
+            <div class="flex mt-6 space-x-4">
+                <!-- Delete Form -->
+                {{ include('user/_delete_form.html.twig', { 'button_class': 'px-6 py-2 bg-red-600 hover:bg-red-700 text-white font-bold shadow-md w-full sm:w-auto text-center' }) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,4 +1,3 @@
-
 home:
     path: /
     controller: App\Controller\HomeController::home
@@ -14,6 +13,27 @@ app_logout:
 app_register:
     path: /register
     controller: App\Controller\RegistrationController::register
+    
+app_user_index:
+    path: /users
+    controller: App\Controller\UserController::index
+
+app_user_new:
+    path: /users/create
+    controller: App\Controller\UserController::new
+
+app_user_show:
+    path: /users/{id}  # Utilisation de {id} au lieu de :id
+    controller: App\Controller\UserController::show    
+
+app_user_edit:
+    path: /users/{id}/edit  # Utilisation de {id} au lieu de :id et ajout d'un "edit" explicite
+    controller: App\Controller\UserController::edit        
+
+app_user_delete:
+    path: /users/{id}/delete  # Utilisation de {id} au lieu de :id et ajout d'un "delete" explicite
+    controller: App\Controller\UserController::delete
+ 
 
 admin_dashboard:
     path: /admin
@@ -22,3 +42,4 @@ admin_dashboard:
 admin_posts:
     path: /admin/post
     controller: App\Controller\Admin\PostController::post
+

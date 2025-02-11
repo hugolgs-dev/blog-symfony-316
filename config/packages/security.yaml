@@ -13,6 +13,11 @@ security:
             lazy: true
             provider: app_user_provider  # <-- Changer le provider ici !
             custom_authenticator: App\Security\AppCustomAuthenticator
+            #entry_point: App\Security\AppCustomAuthenticator
+            form_login:
+                login_path: app_login
+                check_path: app_login
+            entry_point: form_login
             logout:
                 path: app_logout
 

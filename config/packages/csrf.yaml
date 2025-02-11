@@ -1,4 +1,6 @@
-# Enable stateless CSRF protection for forms and logins/logouts
+# Y'a une erreur "Invalid CSRF Token' quand je me connecte depuis 'https://127.0.0.1:8000/login' et que je clique sur se connecter
+#
+#
 framework:
     form:
         csrf_protection:
@@ -9,3 +11,5 @@ framework:
             - submit
             - authenticate
             - logout
+# si je commente "authenticate" j'ai l'erreur suivante : Symfony\Bridge\Doctrine\Security\User\EntityUserProvider::loadUserByIdentifier(): Return value must be of type Symfony\Component\Security\Core\User\UserInterface, App\Entity\User returned
+#

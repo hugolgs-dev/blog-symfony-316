@@ -8,6 +8,7 @@ use App\Security\AppCustomAuthenticator;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -18,6 +19,7 @@ class RegistrationController extends AbstractController
     //#[Route('/register', name: 'app_register')]
     public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
     {
+
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
@@ -25,6 +27,16 @@ class RegistrationController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             // encoder et enregistrer le mot de passe
             $plainPassword = $form->get('plainPassword')->getData();
+            $plainPasswordConfirmation = $form->get('plainPasswordConfirmation')->getData();
+
+            if ($plainPassword !== $plainPasswordConfirmation) {
+                // Ajouter une erreur au champ 'plainPassword'
+                $form->get('plainPassword')->addError(new FormError('Les mots de passe ne correspondent pas.'));
+                return $this->render('registration/register.html.twig', [
+                    'registrationForm' => $form->createView(),
+                ]);
+            }
+
             $user->setPassword($userPasswordHasher->hashPassword($user, $plainPassword));
 
             // assigner le rôle
@@ -37,10 +49,10 @@ class RegistrationController extends AbstractController
             // rediriger vers la page de connexion
             return $this->redirectToRoute('app_login');
         }
-
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $form->createView(),
         ]);
+
     }
 }
 

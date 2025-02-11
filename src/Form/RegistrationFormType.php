@@ -42,9 +42,11 @@ class RegistrationFormType extends AbstractType
                         ]),
                     ],
                 ],
-                'second_options' => ['label' => 'Confirmez le mot de passe'],
+                'second_options' => [
+                    'label' => 'Confirmez le mot de passe',
+                ],
                 'invalid_message' => 'Les mots de passe ne correspondent pas.',
-                'mapped' => false,
+                'mapped' => false, // Ne mappe pas cette donnée sur l'entité User
             ])
             ->add('isAdmin', CheckboxType::class, [
                 'label' => 'Créer un compte administrateur',
@@ -63,3 +65,5 @@ class RegistrationFormType extends AbstractType
         ]);
     }
 }
+
+

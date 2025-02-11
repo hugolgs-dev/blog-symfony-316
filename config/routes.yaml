@@ -13,7 +13,7 @@ app_logout:
 app_register:
     path: /register
     controller: App\Controller\RegistrationController::register
-
+    
 app_user_index:
     path: /users
     controller: App\Controller\UserController::index
@@ -34,3 +34,12 @@ app_user_delete:
     path: /users/{id}/delete  # Utilisation de {id} au lieu de :id et ajout d'un "delete" explicite
     controller: App\Controller\UserController::delete
  
+
+admin_dashboard:
+    path: /admin
+    controller: App\Controller\Admin\DashboardController::index
+
+admin_posts:
+    path: /admin/post
+    controller: App\Controller\Admin\PostController::post
+

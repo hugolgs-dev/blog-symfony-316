@@ -33,7 +33,6 @@ app_user_edit:
 app_user_delete:
     path: /users/{id}/delete  # Utilisation de {id} au lieu de :id et ajout d'un "delete" explicite
     controller: App\Controller\UserController::delete
- 
 
 admin_dashboard:
     path: /admin
@@ -43,3 +42,6 @@ admin_posts:
     path: /admin/post
     controller: App\Controller\Admin\PostController::post
 
+comments_crud:
+    path: /comment
+    controller: App\Controller\Admin\CommentCrudController::index

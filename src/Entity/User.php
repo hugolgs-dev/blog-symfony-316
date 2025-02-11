@@ -5,6 +5,9 @@ namespace App\Entity;
 use App\Repository\UserRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 class User
@@ -25,6 +28,9 @@ class User
 
     #[ORM\Column(type: Types::ARRAY)]
     private array $roles = [];
+
+    #[ORM\OneToMany(targetEntity: Comment::class, mappedBy: 'user', orphanRemoval: true)]
+    private Collection $comments;
 
     public function getId(): ?int
     {
@@ -78,4 +84,21 @@ class User
 
         return $this;
     }
+
+    public function __construct()
+    {
+        $this->comments = new ArrayCollection();
+    }
+
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function __toString(): string
+    {
+        return $this->Name;
+    }
 }
+
+

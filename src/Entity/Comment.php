@@ -5,6 +5,8 @@ namespace App\Entity;
 use App\Repository\CommentRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\User;
+use App\Entity\Post;
 
 #[ORM\Entity(repositoryClass: CommentRepository::class)]
 class Comment
@@ -23,14 +25,16 @@ class Comment
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $updatedAt = null;
 
-    #[ORM\Column(length: 255)]
-    private ?int $user_id = null;
-
     #[ORM\Column]
     private ?bool $isReported = null;
 
-    #[ORM\Column]
-    private ?int $category_id = null;
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'comments')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $user = null;
+
+    #[ORM\ManyToOne(targetEntity: Post::class, inversedBy: 'comments')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Post $post = null;
 
     public function getId(): ?int
     {
@@ -47,6 +51,11 @@ class Comment
         $this->content = $content;
 
         return $this;
+    }
+
+    public function __construct()
+    {
+        $this->createdAt = new \DateTimeImmutable();
     }
 
     public function getCreatedAt(): ?\DateTimeImmutable
@@ -73,18 +82,6 @@ class Comment
         return $this;
     }
 
-    public function getUser(): ?string
-    {
-        return $this->user_id;
-    }
-
-    public function setUser(string $user): static
-    {
-        $this->user_id = $user;
-
-        return $this;
-    }
-
     public function isReported(): ?bool
     {
         return $this->isReported;
@@ -97,15 +94,28 @@ class Comment
         return $this;
     }
 
-    public function getCategoryId(): ?int
+    public function getUser(): ?User
     {
-        return $this->category_id;
+        return $this->user;
     }
 
-    public function setCategoryId(int $category_id): static
+    public function setUser(?User $user): static
     {
-        $this->category_id = $category_id;
+        $this->user = $user;
 
         return $this;
     }
+
+    public function getPost(): ?Post
+    {
+        return $this->post;
+    }
+
+    public function setPost(?Post $post): static
+    {
+        $this->post = $post;
+
+        return $this;
+    }
+
 }

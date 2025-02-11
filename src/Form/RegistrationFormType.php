@@ -9,6 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
@@ -27,6 +28,14 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
             ])
+            ->add('name', TextType::class, [
+                'label' => 'Nom',
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Veuillez entrer un nom',
+                    ]),
+                ],
+            ])
             ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'first_options' => [
@@ -42,9 +51,11 @@ class RegistrationFormType extends AbstractType
                         ]),
                     ],
                 ],
-                'second_options' => ['label' => 'Confirmez le mot de passe'],
+                'second_options' => [
+                    'label' => 'Confirmez le mot de passe',
+                ],
                 'invalid_message' => 'Les mots de passe ne correspondent pas.',
-                'mapped' => false,
+                'mapped' => false, // Ne mappe pas cette donnée sur l'entité User
             ])
             ->add('isAdmin', CheckboxType::class, [
                 'label' => 'Créer un compte administrateur',
@@ -63,3 +74,5 @@ class RegistrationFormType extends AbstractType
         ]);
     }
 }
+
+

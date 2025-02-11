@@ -8,6 +8,7 @@ use App\Security\AppCustomAuthenticator;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -23,18 +24,32 @@ class RegistrationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // encoder et enregistrer le mot de passe
-            $plainPassword = $form->get('plainPassword')->getData();
+
+            $name = $form->get('name')->getData();
+            $user->setName($name);
+
+            $plainPassword = $form->get('plainPassword')->get('first')->getData(); // Premier champ
+            $plainPasswordConfirmation = $form->get('plainPassword')->get('second')->getData(); // Deuxième champ
+
+            if ($plainPassword !== $plainPasswordConfirmation) {
+                // Ajouter une erreur si les mots de passe ne correspondent pas
+                $form->get('plainPassword')->addError(new FormError('Les mots de passe ne correspondent pas.'));
+                return $this->render('registration/register.html.twig', [
+                    'registrationForm' => $form->createView(),
+                ]);
+            }
+
+            // Hashage du mot de passe
             $user->setPassword($userPasswordHasher->hashPassword($user, $plainPassword));
 
-            // assigner le rôle
+            // Assigner le rôle
             $user->setRoles([$form->get('isAdmin')->getData() ? 'ROLE_ADMIN' : 'ROLE_USER']);
 
-            // sauvegarder l'utilisateur
+            // Sauvegarder l'utilisateur
             $entityManager->persist($user);
             $entityManager->flush();
 
-            // rediriger vers la page de connexion
+            // Rediriger vers la page de connexion
             return $this->redirectToRoute('app_login');
         }
 

@@ -19,40 +19,43 @@ class RegistrationController extends AbstractController
     //#[Route('/register', name: 'app_register')]
     public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
     {
-
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // encoder et enregistrer le mot de passe
-            $plainPassword = $form->get('plainPassword')->getData();
-            $plainPasswordConfirmation = $form->get('plainPasswordConfirmation')->getData();
+
+            $name = $form->get('name')->getData();
+            $user->setName($name);
+
+            $plainPassword = $form->get('plainPassword')->get('first')->getData(); // Premier champ
+            $plainPasswordConfirmation = $form->get('plainPassword')->get('second')->getData(); // Deuxième champ
 
             if ($plainPassword !== $plainPasswordConfirmation) {
-                // Ajouter une erreur au champ 'plainPassword'
+                // Ajouter une erreur si les mots de passe ne correspondent pas
                 $form->get('plainPassword')->addError(new FormError('Les mots de passe ne correspondent pas.'));
                 return $this->render('registration/register.html.twig', [
                     'registrationForm' => $form->createView(),
                 ]);
             }
 
+            // Hashage du mot de passe
             $user->setPassword($userPasswordHasher->hashPassword($user, $plainPassword));
 
-            // assigner le rôle
+            // Assigner le rôle
             $user->setRoles([$form->get('isAdmin')->getData() ? 'ROLE_ADMIN' : 'ROLE_USER']);
 
-            // sauvegarder l'utilisateur
+            // Sauvegarder l'utilisateur
             $entityManager->persist($user);
             $entityManager->flush();
 
-            // rediriger vers la page de connexion
+            // Rediriger vers la page de connexion
             return $this->redirectToRoute('app_login');
         }
+
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $form->createView(),
         ]);
-
     }
 }
 

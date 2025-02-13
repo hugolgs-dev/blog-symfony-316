@@ -3,14 +3,38 @@
 {% block title %}Accueil{% endblock %}
 
 {% block body %}
-    <h1>Page d'accueil</h1>
-    {% if app.user %}
-        <!-- si l'utilisateur est connecté -->
-        <p>Bonjour, {{ app.user.email }} !</p>
-        <a href="{{ path('app_logout') }}">Se déconnecter</a>
-    {% else %}
-        <!-- si l'utilisateur n'est pas connecté -->
-        <a href="{{ path('app_login') }}">Se connecter</a> |
-        <a href="{{ path('app_register') }}">S'inscrire</a>
-    {% endif %}
+<div class="max-w-4xl p-6 mx-auto mt-10">
+
+    <!-- Barre de recherche -->
+    <div class="mb-6">
+        <form action="{{ path('post_search') }}" method="get">
+            <input type="text" name="q" placeholder="Rechercher un post..." class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" value="{{ query|default('') }}">
+            <button type="submit" class="px-4 py-2 ml-2 text-white bg-blue-500 rounded-lg hover:bg-blue-600">Rechercher</button>
+        </form>
+    </div>
+
+    <!-- Résultats de recherche -->
+    <div>
+{% if query is defined and query is not empty %}
+    <h1>Résultats de recherche pour "{{ query }}"</h1>
+{% endif %}
+
+        {% if posts is defined and posts is empty %}
+            <p>Aucun résultat trouvé.</p>
+            
+        {% else %}
+            <ul class="mt-4 space-y-4">
+                {% for post in posts %}
+                    <li class="p-4 bg-white border border-gray-300 rounded-lg shadow">
+                        <a href="{{ path('post_show', {'id': post.id}) }}" class="text-lg font-bold text-blue-600 hover:underline">
+                            {{ post.title }}
+                        </a>
+                        <p class="text-gray-700">{{ post.content[:100] }}...</p>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+
+</div>
 {% endblock %}

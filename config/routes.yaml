@@ -45,3 +45,9 @@ admin_posts:
 comments_crud:
     path: /comment
     controller: App\Controller\Admin\CommentCrudController::index
+
+post_search:
+    path: /search
+    controller: App\Controller\HomeController::home
+    methods: GET
+

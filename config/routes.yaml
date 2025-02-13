@@ -45,3 +45,11 @@ admin_posts:
 comments_crud:
     path: /comment
     controller: App\Controller\Admin\CommentCrudController::index
+
+a_propos_de_nous:
+  path: /a-propos-de-nous
+  controller: App\Controller\AboutController::aboutUs
+
+contact:
+  path: /contact
+  controller: App\Controller\ContactController::contact

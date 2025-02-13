@@ -61,9 +61,6 @@ class RegistrationFormType extends AbstractType
                 'label' => 'Créer un compte administrateur',
                 'required' => false,
                 'mapped' => false,
-            ])
-            ->add('submit', SubmitType::class, [
-                'label' => 'S\'inscrire',
             ]);
     }
 

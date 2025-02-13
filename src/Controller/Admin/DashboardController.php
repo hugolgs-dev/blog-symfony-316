@@ -11,6 +11,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use App\Controller\Admin\CommentCrudController;
 use App\Entity\Comment;
 use App\Entity\Post;
+use App\Entity\User;
 
 class DashboardController extends AbstractDashboardController
 {
@@ -47,6 +48,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToDashboard('Tableau de bord', 'fa fa-home');
         yield MenuItem::LinktoCrud('Article', 'fa fa-posts', Post::class);
         yield MenuItem::linkToCrud('Commentaires', 'fa fa-comments', Comment::class);
+        yield MenuItem::linkToCrud('Users', 'fa fa-users', User::class);
 
     }
 }

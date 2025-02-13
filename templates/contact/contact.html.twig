@@ -1,0 +1,75 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Contact | Echo Actu{% endblock %}
+
+{% block body %}
+    <div class="max-w-3xl mx-auto p-6 bg-white shadow-lg rounded-lg mt-10">
+        <h1 class="text-3xl font-bold text-gray-800 mb-4">Contactez-nous</h1>
+        <p class="text-gray-600 mb-6">Remplissez le formulaire ci-dessous pour nous envoyer un message.</p>
+        
+        <form id="contact-form" class="space-y-4">
+            <div>
+                <label class="block text-gray-700 font-medium mb-2">Nom</label>
+                <input type="text" id="name" class="w-full border rounded-lg p-2 focus:ring focus:ring-blue-200">
+                <p class="text-red-500 text-sm hidden" id="error-name">Veuillez entrer votre nom.</p>
+            </div>
+            <div>
+                <label class="block text-gray-700 font-medium mb-2">Email</label>
+                <input type="email" id="email" class="w-full border rounded-lg p-2 focus:ring focus:ring-blue-200">
+                <p class="text-red-500 text-sm hidden" id="error-email">Veuillez entrer un email valide.</p>
+            </div>
+            <div>
+                <label class="block text-gray-700 font-medium mb-2">Message</label>
+                <textarea id="message" class="w-full border rounded-lg p-2 h-32 focus:ring focus:ring-blue-200"></textarea>
+                <p class="text-red-500 text-sm hidden" id="error-message">Veuillez entrer un message.</p>
+            </div>
+            <button type="submit" class="bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition">Envoyer</button>
+            <p class="text-green-600 text-sm hidden" id="success-message">Votre message a bien été envoyé.</p>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('contact-form').addEventListener('submit', function(event) {
+            event.preventDefault(); //empêcher l'envoi réel du formulaire
+
+            let isValid = true;
+
+            let name = document.getElementById('name');
+            let email = document.getElementById('email');
+            let message = document.getElementById('message');
+
+            let errorName = document.getElementById('error-name');
+            let errorEmail = document.getElementById('error-email');
+            let errorMessage = document.getElementById('error-message');
+            let successMessage = document.getElementById('success-message');
+
+            //réinitialisation des erreurs
+            errorName.classList.add('hidden');
+            errorEmail.classList.add('hidden');
+            errorMessage.classList.add('hidden');
+            successMessage.classList.add('hidden');
+
+            //validation des champs
+            if (name.value.trim() === '') {
+                errorName.classList.remove('hidden');
+                isValid = false;
+            }
+            if (email.value.trim() === '' || !email.value.includes('@')) {
+                errorEmail.classList.remove('hidden');
+                isValid = false;
+            }
+            if (message.value.trim() === '') {
+                errorMessage.classList.remove('hidden');
+                isValid = false;
+            }
+
+            //si tout est bon, on affiche un message de succès
+            if (isValid) {
+                successMessage.classList.remove('hidden');
+                name.value = '';
+                email.value = '';
+                message.value = '';
+            }
+        });
+    </script>
+{% endblock %}

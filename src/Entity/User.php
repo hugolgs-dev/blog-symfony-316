@@ -27,8 +27,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $password = null;
 
-    #[ORM\Column(type: Types::ARRAY)]
-    private array $roles = [];
+    #[ORM\Column(type: Types::STRING)]
+    private string $roles = 'ROLE_USER';
 
     #[ORM\OneToMany(targetEntity: Comment::class, mappedBy: 'user', orphanRemoval: true)]
     private Collection $comments;
@@ -51,7 +51,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setName(string $Name): static
     {
         $this->Name = $Name;
-
         return $this;
     }
 
@@ -63,7 +62,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setEmail(string $email): static
     {
         $this->email = $email;
-
         return $this;
     }
 
@@ -75,33 +73,27 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPassword(string $password): static
     {
         $this->password = $password;
-
         return $this;
     }
 
     public function getRoles(): array
     {
-        if (in_array('ROLE_ADMIN', $this->roles)) {
-            return $this->roles;
-        }
-        return $this->roles = ['ROLE_USER'];
+        return explode(',', $this->roles);
     }
 
     public function setRoles(array $roles): static
     {
-        $this->roles = $roles;
-
+        $this->roles = implode(',', $roles);
         return $this;
     }
 
     public function getUsername(): string
     {
-        return $this->email; // Utilisez l'email comme nom d'utilisateur
+        return $this->email; 
     }
 
     public function getSalt(): ?string
     {
-        // Pas besoin de salt si vous utilisez bcrypt ou argon2i
         return null;
     }
 

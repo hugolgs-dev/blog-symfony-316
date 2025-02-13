@@ -5,11 +5,17 @@
 {% block body %}
     <h1>Page d'accueil</h1>
     {% if app.user %}
-        <!-- si l'utilisateur est connecté -->
+        <!-- Si l'utilisateur est connecté -->
         <p>Bonjour, {{ app.user.email }} !</p>
         <a href="{{ path('app_logout') }}">Se déconnecter</a>
+
+        {% if 'ROLE_ADMIN' in app.user.roles %}
+            <!-- Si l'utilisateur a le rôle d'administrateur -->
+            <a href="{{ path('admin_dashboard') }}">Accéder à l'administration</a>
+        {% endif %}
+
     {% else %}
-        <!-- si l'utilisateur n'est pas connecté -->
+        <!-- Si l'utilisateur n'est pas connecté -->
         <a href="{{ path('app_login') }}">Se connecter</a> |
         <a href="{{ path('app_register') }}">S'inscrire</a>
     {% endif %}

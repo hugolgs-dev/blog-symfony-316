@@ -3,20 +3,27 @@
 {% block title %}Accueil{% endblock %}
 
 {% block body %}
-    <h1>Page d'accueil</h1>
+    <h1 class="text-3xl font-semibold mb-6">Page d'accueil</h1>
+    
     {% if app.user %}
         <!-- Si l'utilisateur est connecté -->
-        <p>Bonjour, {{ app.user.email }} !</p>
-        <a href="{{ path('app_logout') }}">Se déconnecter</a>
+        <p class="text-lg">Bonjour, {{ app.user.email }} !</p>
+        <a href="{{ path('app_logout') }}" class="text-blue-600 hover:text-blue-800 underline">Se déconnecter</a>
 
         {% if 'ROLE_ADMIN' in app.user.roles %}
             <!-- Si l'utilisateur a le rôle d'administrateur -->
-            <a href="{{ path('admin_dashboard') }}">Accéder à l'administration</a>
+            <a href="{{ path('admin_dashboard') }}" class="text-blue-600 hover:text-blue-800 underline ml-4">Accéder à l'administration</a>
         {% endif %}
 
     {% else %}
         <!-- Si l'utilisateur n'est pas connecté -->
-        <a href="{{ path('app_login') }}">Se connecter</a> |
-        <a href="{{ path('app_register') }}">S'inscrire</a>
+        <a href="{{ path('app_login') }}" class="text-blue-600 hover:text-blue-800 underline">Se connecter</a> |
+        <a href="{{ path('app_register') }}" class="text-blue-600 hover:text-blue-800 underline ml-4">S'inscrire</a>
     {% endif %}
+
+    <!-- Le lien vers "À propos de nous" est accessible pour tout le monde -->
+    <p class="mt-4">En savoir plus sur notre équipe et notre mission sur notre page <a href="{{ path('a_propos_de_nous') }}" class="text-blue-600 hover:text-blue-800 underline">À propos de nous</a>.</p>
+    <p>Vous souhaitez nous contacter ? Cliquez <a href="{{ path('contact') }}" class="text-blue-600 hover:text-blue-800 underline">ici</a>.</p>
+
 {% endblock %}
+

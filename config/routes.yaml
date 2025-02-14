@@ -40,6 +40,11 @@ app_actus:
     controller: App\Controller\AffichagePostController::index
     methods: GET
 
+app_actus_post:
+    path: /actus/post/{id}
+    controller: App\Controller\AffichageContentPostController::index
+    methods: GET
+
 a_propos_de_nous:
   path: /a-propos-de-nous
   controller: App\Controller\AboutController::aboutUs

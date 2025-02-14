@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} {{ post.title }} {% endblock %}
+
+{% block body %}
+    <div class="container-fluid mx-auto mt-5 px-3">
+        <h1 class="text-xxl-start fa-font-awesome mb-4">{{ post.title }}</h1>
+        <p class="fst-italic">Publié le {{ post.createdAt|date('d/m/Y') }} par {{ post.author }}</p>
+        <div class="mt-4">
+            <p>{{ post.content|nl2br }}</p>
+        </div>
+        <p class="mt-5 text-decoration-underline">
+            <a href="{{ path('app_actus') }}">← Retour aux articles</a>
+        </p>
+    </div>
+{% endblock %}

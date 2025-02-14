@@ -31,7 +31,6 @@ comments_crud:
     path: /comment
     controller: App\Controller\Admin\CommentCrudController::index
 
-
 users_crud:
     path: /users
     controller: App\Controller\Admin\UserCrudController::index
@@ -42,8 +41,10 @@ app_actus:
 
 app_actus_post:
     path: /actus/post/{id}
-    controller: App\Controller\AffichageContentPostController::index
-    methods: GET
+    controller: App\Controller\AffichageContentPostController::showPost
+
+app_comment_report:
+    path: /comment/report/{id}
 
 a_propos_de_nous:
   path: /a-propos-de-nous

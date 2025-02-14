@@ -13,4 +13,30 @@
             <a href="{{ path('app_actus') }}">← Retour aux articles</a>
         </p>
     </div>
+
+    <h2>Commentaires</h2>
+
+    {% if app.user %}
+        {{ form_start(commentForm) }}
+        {{ form_row(commentForm.content) }}
+        {{ form_row(commentForm.submit) }}
+        {{ form_end(commentForm) }}
+    {% else %}
+        <p><a href="{{ path('app_login') }}">Connectez-vous</a> pour poster un commentaire.</p>
+    {% endif %}
+
+    {{ dump(comments) }}
+    {% for comment in comments %}
+        <div class="border p-3 mt-3">
+            <p><strong>{{ comment.user.username }}</strong> - <small>{{ comment.createdAt|date('d/m/Y H:i') }}</small></p>
+            <p>{{ comment.content }}</p>
+            <form action="{{ path('app_comment_report', {'id': comment.id}) }}" method="post" class="d-inline">
+                <button type="submit" class="btn btn-sm btn-warning">🚨 Signaler</button>
+            </form>
+        </div>
+    {% else %}
+        <p>Aucun commentaire pour l'instant.</p>
+    {% endfor %}
+
+    <p>Un commentaire déplaisant? Signalez-le!</p>
 {% endblock %}

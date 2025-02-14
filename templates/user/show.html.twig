@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}User{% endblock %}
+
+{% block body %}
+    <div class="container p-6 mx-auto">
+        <h1 class="mb-6 text-2xl font-bold text-[#5048E5]">User Details</h1>
+
+        <form class="p-6 bg-white rounded-lg shadow-md">
+            <div class="space-y-4">
+                <div>
+                    <label for="userId" class="block text-sm font-medium text-[#5048E5]">Id</label>
+                    <input type="text" id="userId" name="userId" value="{{ user.id }}" class="block w-full px-4 py-2 mt-1 border border-purple-300 rounded-lg" readonly />
+                </div>
+
+                <div>
+                    <label for="userName" class="block text-sm font-medium text-[#5048E5]">Name</label>
+                    <input type="text" id="userName" name="userName" value="{{ user.Name }}" class="block w-full px-4 py-2 mt-1 border border-purple-300 rounded-lg" readonly />
+                </div>
+
+                <div>
+                    <label for="userEmail" class="block text-sm font-medium text-[#5048E5]">Email</label>
+                    <input type="email" id="userEmail" name="userEmail" value="{{ user.email }}" class="block w-full px-4 py-2 mt-1 border border-purple-300 rounded-lg" readonly />
+                </div>
+
+                <div>
+                    <label for="userPassword" class="block text-sm font-medium text-[#5048E5]">Password</label>
+                    <input type="text" id="userPassword" name="userPassword" value="{{ user.password }}" class="block w-full px-4 py-2 mt-1 border border-purple-300 rounded-lg" readonly />
+                </div>
+
+                <div>
+                    <label for="userRoles" class="block text-sm font-medium text-[#5048E5]">Roles</label>
+                    <input type="text" id="userRoles" name="userRoles" value="{{ user.roles ? user.roles|join(', ') : '' }}" class="block w-full px-4 py-2 mt-1 border border-purple-300 rounded-lg" readonly />
+                </div>
+            </div>
+        </form>
+
+        <div class="flex mt-6 space-x-4">
+            <a href="{{ path('app_user_index') }}" 
+               class="px-4 py-2 font-bold text-white bg-[#5048E5] rounded-none shadow-md hover:bg-opacity-90">
+                Back to list
+            </a>
+
+            <!-- View Details Button with sharp edges and purple -->
+            <a href="{{ path('app_user_index') }}" 
+               class="px-4 py-2 font-bold text-white bg-[#5048E5] rounded-none shadow-md hover:bg-opacity-90">
+                View Details
+            </a>
+
+            <!-- Delete button -->
+            {{ include('user/_delete_form.html.twig', { 'button_class': 'bg-[#5048E5] hover:bg-opacity-90 text-white font-bold py-2 px-4 rounded-none shadow-md' }) }}
+        </div>
+    </div>
+{% endblock %}

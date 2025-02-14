@@ -35,12 +35,14 @@ class AppCustomAuthenticator extends AbstractLoginFormAuthenticator
         // enregistrer l'email pour l'afficher dans le formulaire de login
         $request->getSession()->set(SecurityRequestAttributes::LAST_USERNAME, $email);
 
+        $csrfToken = $request->request->get('_csrf_token');
+
         // créer un passport pour l'authentification
         return new Passport(
-            new UserBadge($email), 
-            new PasswordCredentials($password),  
+            new UserBadge($email),
+            new PasswordCredentials($password),
             [
-                new CsrfTokenBadge('authenticate', $request->get('_csrf_token')), 
+                new CsrfTokenBadge('authenticate', $csrfToken),
             ]
         );
     }
@@ -48,13 +50,13 @@ class AppCustomAuthenticator extends AbstractLoginFormAuthenticator
     // après une authentification réussie, rediriger l'utilisateur
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
-        
+
         if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
             return new RedirectResponse($targetPath);
         }
 
         // rediriger vers la page d'accueil
-        return new RedirectResponse($this->urlGenerator->generate('home')); 
+        return new RedirectResponse($this->urlGenerator->generate('home'));
     }
 
     // obtenir l'URL de la page de login

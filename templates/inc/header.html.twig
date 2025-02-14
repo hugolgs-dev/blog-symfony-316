@@ -1,3 +1,35 @@
-<header>
-    <h1>Site Symfony 316</h1>
-</header>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Site Symfony 316</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+    
+    <header class="flex items-center justify-between w-full p-6 text-white bg-indigo-600 shadow-lg">
+        <h1 class="text-2xl font-extrabold">Site Symfony 316</h1>
+        
+        <nav class="space-x-6">
+            <a href="/" class="text-white hover:underline">Acceuil</a>
+            <a href="/contact" class="text-white hover:underline">Contact</a>
+            <a href="/a-propos-de-nous" class="text-white hover:underline">About Us</a>
+        </nav>
+        
+        <div class="p-2 bg-transparent rounded-lg">
+            {% if app.user %}
+                <p class="inline-block mr-4">Bonjour, <span class="font-semibold">{{ app.user.email }}</span> !</p>
+                <a href="{{ path('app_logout') }}" 
+                   class="px-4 py-2 text-white transition-all duration-300 border border-white rounded-lg hover:bg-white hover:text-indigo-600">Se déconnecter</a>
+            {% else %}
+                <a href="{{ path('app_login') }}" 
+                   class="px-4 py-2 text-white transition-all duration-300 border border-white rounded-lg hover:bg-white hover:text-indigo-600">Se connecter</a>
+                <a href="{{ path('app_register') }}" 
+                   class="px-4 py-2 ml-4 text-white transition-all duration-300 border border-white rounded-lg hover:bg-white hover:text-indigo-600">S'inscrire</a>
+            {% endif %}
+        </div>
+    </header>
+    
+</body>
+</html>

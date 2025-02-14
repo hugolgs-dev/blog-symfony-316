@@ -7,6 +7,7 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
+ * .................................................................................................................................................................................
  * @extends ServiceEntityRepository<Notification>
  */
 class NotificationRepository extends ServiceEntityRepository

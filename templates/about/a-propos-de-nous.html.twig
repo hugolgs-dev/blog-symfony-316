@@ -1,0 +1,51 @@
+{# templates/about/a-propos-de-nous.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}À propos de nous | Echo Actu{% endblock %}
+
+{% block body %}
+<div class="bg-gray-100 min-h-screen flex items-center justify-center py-12">
+    <div class="max-w-4xl w-full bg-white shadow-lg rounded-lg p-8">
+        <h1 class="text-3xl font-bold text-gray-800 mb-6 text-center">À propos de nous</h1>
+        <p class="text-gray-600 text-lg leading-relaxed">
+            Bienvenue sur <strong>Echo Actu</strong>, votre média en ligne indépendant dédié à l'analyse approfondie de l'actualité.
+            Depuis notre création en 2020, nous nous engageons à offrir une information claire, fiable et accessible à tous.
+        </p>
+
+        <h2 class="text-2xl font-semibold text-gray-800 mt-8 mb-4">Notre Mission</h2>
+        <p class="text-gray-600 leading-relaxed">
+            Dans un monde où l'information circule à une vitesse fulgurante, il est essentiel de prendre du recul. Notre mission est de vous fournir des analyses détaillées et sourcées
+            pour vous aider à mieux comprendre les enjeux contemporains. Chez Echo Actu, nous croyons que l'information doit être un outil de réflexion et non un simple flux de nouvelles.
+        </p>
+
+        <h2 class="text-2xl font-semibold text-gray-800 mt-8 mb-4">Nos Valeurs</h2>
+        <ul class="text-gray-600 list-disc list-inside space-y-2">
+            <li><strong>📰 Fiabilité :</strong> Sources vérifiées et enquêtes rigoureuses pour garantir l'exactitude de nos contenus.</li>
+            <li><strong>🌍 Diversité :</strong> Sujets variés : politique, société, environnement, culture, science et technologie.</li>
+            <li><strong>💡 Accessibilité :</strong> Analyses compréhensibles pour tous, ton clair et pédagogique.</li>
+        </ul>
+
+        <h2 class="text-2xl font-semibold text-gray-800 mt-8 mb-4">Nos Thématiques</h2>
+        <ul class="text-gray-600 list-disc list-inside space-y-2">
+            <li><strong>Actualités générales :</strong> Décryptage des grands événements mondiaux et nationaux.</li>
+            <li><strong>Science & Technologie :</strong> Innovations, intelligence artificielle, cybersécurité, médecine du futur...</li>
+            <li><strong>Culture & Divertissement :</strong> Cinéma, musique, littérature et tendances sociétales.</li>
+            <li><strong>Environnement & Société :</strong> Développement durable, enjeux climatiques, évolutions sociales.</li>
+        </ul>
+
+        <h2 class="text-2xl font-semibold text-gray-800 mt-8 mb-4">Notre Équipe</h2>
+        <p class="text-gray-600 leading-relaxed">
+            Echo Actu, c'est avant tout une équipe passionnée de journalistes, d'analystes et de créateurs de contenu, animés par la volonté d'offrir une information de qualité.
+            Chaque membre de la rédaction apporte son expertise et sa sensibilité pour proposer des articles enrichissants et pertinents.
+        </p>
+
+        <h3 class="text-xl font-semibold text-gray-800 mt-8 mb-4">Contactez-nous</h3>
+        <p class="text-gray-600 leading-relaxed">
+            Vous souhaitez en savoir plus sur notre ligne éditoriale, proposer un sujet ou collaborer avec nous ?  
+            N'hésitez pas à nous écrire via notre <a href="{{ path('contact') }}" class="text-blue-600 hover:underline font-medium">formulaire de contact</a>.
+        </p>
+
+    </div>
+</div>
+{% endblock %}

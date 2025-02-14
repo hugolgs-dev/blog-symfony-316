@@ -3,19 +3,23 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
-use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Doctrine\DBAL\Types\Types;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface; // Ajout de l'interface
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
-class User implements UserInterface, PasswordAuthenticatedUserInterface // Implémentation de PasswordAuthenticatedUserInterface
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $Name = null;
 
     #[ORM\Column(length: 255, unique: true)]
     private ?string $email = null;
@@ -23,19 +27,69 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface // Impl�
     #[ORM\Column(length: 255)]
     private ?string $password = null;
 
-    #[ORM\Column(type: 'json')]
-    private array $roles = ['ROLE_USER']; // Par défaut, un utilisateur a le rôle "ROLE_USER"
+    #[ORM\Column(type: Types::STRING)]
+    private string $roles = 'ROLE_USER';
 
-    // Autres champs et méthodes
+    #[ORM\OneToMany(targetEntity: Comment::class, mappedBy: 'user', orphanRemoval: true)]
+    private Collection $comments;
+
+    public function __construct()
+    {
+        $this->comments = new ArrayCollection();
+    }
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->Name;
+    }
+
+    public function setName(string $Name): static
+    {
+        $this->Name = $Name;
+        return $this;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): static
+    {
+        $this->email = $email;
+        return $this;
+    }
+
+    public function getPassword(): ?string
+    {
+        return $this->password;
+    }
+
+    public function setPassword(string $password): static
+    {
+        $this->password = $password;
+        return $this;
+    }
 
     public function getRoles(): array
     {
-        return $this->roles;
+        return explode(',', $this->roles);
     }
 
-    public function getPassword(): string
+    public function setRoles(array $roles): static
     {
-        return $this->password;
+        $this->roles = implode(',', $roles);
+        return $this;
+    }
+
+    public function getUsername(): string
+    {
+        return $this->email; 
     }
 
     public function getSalt(): ?string
@@ -47,38 +101,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface // Impl�
     {
     }
 
+    public function __toString(): string
+    {
+        return $this->Name;
+    }
+
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
     public function getUserIdentifier(): string
     {
-        return $this->email;
-    }
-
-    // Getters et setters
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
-    public function getEmail(): ?string
-    {
-        return $this->email;
-    }
-
-    public function setEmail(string $email): self
-    {
-        $this->email = $email;
-        return $this;
-    }
-
-    public function setPassword(string $password): self
-    {
-        $this->password = $password;
-        return $this;
-    }
-
-    public function setRoles(array $roles): self
-    {
-        $this->roles = $roles;
-        return $this;
+        return (string) $this->email;
     }
 }

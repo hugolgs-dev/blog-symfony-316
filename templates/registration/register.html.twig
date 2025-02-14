@@ -1,18 +1,56 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Register{% endblock %}
+{% block title %}S'inscrire{% endblock %}
 
 {% block body %}
-    <h1>Register</h1>
+<div class="flex items-center justify-center min-h-screen bg-gray-100">
+    <div class="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-lg">
+        <h1 class="text-2xl font-bold text-center text-gray-700">S'inscrire</h1>
 
-    {{ form_errors(registrationForm) }}
+        {{ form_errors(registrationForm) }}
 
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-        
-        <button type="submit" class="btn">Register</button>
-    {{ form_end(registrationForm) }}
+        {{ form_start(registrationForm, {'method': 'POST'}) }}
+            <div class="space-y-2">
+                {{ form_label(registrationForm.email, 'E-mail', {'attr': {'class': 'block text-sm font-medium text-gray-700'}}) }}
+                {{ form_widget(registrationForm.email, {
+                    'attr': {'class': 'w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500'}
+                }) }}
+            </div>
+
+            <div class="space-y-2">
+                {{ form_label(registrationForm.name, 'Nom', {'attr': {'class': 'block text-sm font-medium text-gray-700'}}) }}
+                {{ form_widget(registrationForm.name, {
+                    'attr': {'class': 'w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500'}
+                }) }}
+            </div>
+
+            <div class="space-y-4">
+                <div class="space-y-2">
+                    {{ form_label(registrationForm.plainPassword.first, 'Mot de passe', {'attr': {'class': 'block text-sm font-medium text-gray-700'}}) }}
+                    {{ form_widget(registrationForm.plainPassword.first, {
+                        'attr': {'class': 'w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500'}
+                    }) }}
+                </div>
+
+                <div class="space-y-2">
+                    {{ form_label(registrationForm.plainPassword.second, 'Confirmez le mot de passe', {'attr': {'class': 'block text-sm font-medium text-gray-700'}}) }}
+                    {{ form_widget(registrationForm.plainPassword.second, {
+                        'attr': {'class': 'w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500'}
+                    }) }}
+                </div>
+            </div>
+
+            <div class="flex items-center space-x-2">
+                {{ form_widget(registrationForm.isAdmin, {
+                    'attr': {'class': 'h-5 w-5 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded'}
+                }) }}
+                {{ form_label(registrationForm.isAdmin, 'Êtes-vous administrateur ?', {'attr': {'class': 'text-sm text-gray-700'}}) }}
+            </div>
+
+            <button type="submit" class="w-full py-2 bg-indigo-600 text-white font-semibold rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 mt-4">
+                S'inscrire
+            </button>
+        {{ form_end(registrationForm) }}
+    </div>
+</div>
 {% endblock %}

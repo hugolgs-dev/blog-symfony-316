@@ -3,7 +3,27 @@
 {% block title %}Accueil{% endblock %}
 
 {% block body %}
-<div class="max-w-4xl p-6 mx-auto mt-10">
+    <h1>Page d'accueil</h1>
+    <div class="last-post mt-5 px-3">
+    <h2 class="text-2xl font-bold text-gray-400 border-b-2 pb-3">Les derniers articles</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-3">
+    {% for post in latestPosts %}
+        <article class="mb-4 border shadow px-4 py-2">
+            <h2 class="font-bold text-xl text-center mb-2">{{ post.title }}</h2>
+			<p>{{ post.content|split(' ')|slice(0, 20)|join(' ') ~ '...' }}</p>
+            <p class="text-indigo-600 underline cursor-pointer hover:text-indigo-700 visited:text-gray-500"><a href="">Lire la suite</a></p>
+            <p><small>Publié le {{ post.createdAt|date('d/m/Y') }}</small></p>
+            <p><small>Par {{ post.author }}</small></p>
+        </article>
+    {% else %}
+        <p>Aucun article trouvé.</p>
+    {% endfor %}
+    </div>
+    </div>
+    <p class="text-center text-indigo-600 underline cursor-pointer"><a href="{{ path('app_actus') }}">Voir tous les articles</a></p>
+
+	<div
+		class="max-w-4xl p-6 mx-auto mt-10">
 
     <!-- Barre de recherche -->
     <div class="mb-6">

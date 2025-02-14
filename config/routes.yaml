@@ -50,6 +50,10 @@ comments_crud:
 users_crud:
     path: /users
     controller: App\Controller\Admin\UserCrudController::index
+app_actus:
+    path: /actus
+    controller: App\Controller\AffichagePostController::index
+    methods: GET
 
 a_propos_de_nous:
   path: /a-propos-de-nous
@@ -63,4 +67,5 @@ post_search:
     path: /search
     controller: App\Controller\Admin\PostCrudController::home
     methods: GET
+
 

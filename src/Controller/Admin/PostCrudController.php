@@ -22,15 +22,27 @@ class PostCrudController extends AbstractCrudController
     #[Route('/search', name: 'post_search', methods: ['GET'])]
     public function home(Request $request, PostRepository $postRepository): Response
     {
-        $query = $request->query->get('q', '');
-        $posts = $query ? $postRepository->searchPosts($query) : [];
-    
+        // Récupération du terme de recherche
+        $query = $request->query->get('q');
+
+        if ($query) {
+            // Si une recherche est effectuée, on récupère uniquement les résultats correspondants
+            $latestPosts = $postRepository->createQueryBuilder('p')
+                ->where('p.title LIKE :query OR p.content LIKE :query')
+                ->setParameter('query', "%$query%")
+                ->getQuery()
+                ->getResult();
+        } else {
+            // Sinon, on affiche les derniers articles
+            $latestPosts = $postRepository->findBy([], ['createdAt' => 'DESC'], 6);
+        }
+
         return $this->render('home.html.twig', [
-            'posts' => $posts,
-            'query' => $query
+            'query' => $query,
+            'latestPosts' => $latestPosts, // Utilisé pour afficher soit la recherche, soit les derniers articles
         ]);
     }
-    
+
 
 
 }

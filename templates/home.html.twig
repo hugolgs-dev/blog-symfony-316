@@ -1,42 +1,50 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Accueil
-{% endblock %}
+{% block title %}Accueil{% endblock %}
 
 {% block body %}
-	<div
-		class="max-w-4xl p-6 mx-auto mt-10">
+<div class="max-w-4xl p-6 mx-auto mt-10">
 
-		<!-- Barre de recherche -->
-		<div class="mb-6">
-			<form action="{{ path('post_search') }}" method="get">
-				<input type="text" name="q" placeholder="Rechercher un post..." class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" value="{{ query|default('') }}">
-			</form>
-		</div>
+    <!-- Barre de recherche -->
+    <div class="mb-6">
+        <form action="{{ path('post_search') }}" method="get">
+            <input type="text" name="q" placeholder="Rechercher un post..." class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" value="{{ query|default('') }}">
+        </form>
+    </div>
 
-		<!-- Résultats de recherche -->
-		<div>
-			{% if query is not empty %}
-				<h1>Résultats de recherche pour "{{ query }}"</h1>
-			{% endif %}
+    <!-- Résultats de recherche ou derniers articles -->
+    <div>
+        {% if query is not empty %}
+            <h1>Résultats de recherche pour "{{ query }}"</h1>
+        {% endif %}
 
-			{% if  posts is  empty %}
-				<p>Aucun résultat trouvé.</p>
+        {% if latestPosts is empty %}
+            <p>Aucun article trouvé.</p>
+        {% else %}
+            <div class="px-3 mt-5 last-post">
+                <h2 class="pb-3 text-2xl font-bold text-gray-400 border-b-2">
+                    {% if query is not empty %}
+                        Résultats de recherche
+                    {% else %}
+                        Les derniers articles
+                    {% endif %}
+                </h2>
+                <div class="grid grid-cols-1 gap-4 mt-3 md:grid-cols-3">
+                    {% for post in latestPosts %}
+                        <article class="px-4 py-2 mb-4 border shadow">
+                            <h2 class="mb-2 text-xl font-bold text-center">{{ post.title }}</h2>
+                            <p>{{ post.content }}</p>
+                            <p class="text-indigo-600 underline cursor-pointer hover:text-indigo-700 visited:text-gray-500">
+                                <a href="#">Lire la suite</a>
+                            </p>
+                            <p><small>Publié le {{ post.createdAt|date('d/m/Y') }}</small></p>
+                            <p><small>Par {{ post.author }}</small></p>
+                        </article>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+    </div>
 
-			{% else %}
-				<ul class="mt-4 space-y-4">
-					{% for post in posts %}
-						<li class="p-4 bg-white border border-gray-300 rounded-lg shadow">
-							<a href="{{ path('post_show', {'id': post.id}) }}" class="text-lg font-bold text-blue-600 hover:underline">
-								{{ post.title }}
-							</a>
-							<p class="text-gray-700">{{ post.content[:100] }}...</p>
-						</li>
-					{% endfor %}
-				</ul>
-			{% endif %}
-		</div>
-
-	</div>
+</div>
 {% endblock %}
-

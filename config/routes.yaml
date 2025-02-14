@@ -46,6 +46,11 @@ comments_crud:
     path: /comment
     controller: App\Controller\Admin\CommentCrudController::index
 
+
+users_crud:
+    path: /users
+    controller: App\Controller\Admin\UserCrudController::index
+
 a_propos_de_nous:
   path: /a-propos-de-nous
   controller: App\Controller\AboutController::aboutUs
@@ -56,6 +61,6 @@ contact:
 
 post_search:
     path: /search
-    controller: App\Controller\HomeController::home
+    controller: App\Controller\Admin\PostCrudController::home
     methods: GET
 

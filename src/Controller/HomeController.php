@@ -8,23 +8,16 @@ use Symfony\Component\HttpFoundation\Response;
 
 class HomeController extends AbstractController
 {
-    public function home(): Response
+    public function home(PostRepository $postRepository): Response
     {
-        // For the initial load, you can decide:
-        // - to show all posts
-        // - or to show no posts at all
 
-        // Option A: Show NO posts by default
+        $latestPosts = $postRepository->findBy([], ['createdAt' => 'DESC'], 3); // Récupère les 3 derniers posts
         $posts = [];
         $query = '';
-
-        // Option B: Show ALL posts by default
-        // $posts = $postRepository->findAll();
-        // $query = '';
-
         return $this->render('home.html.twig', [
             'posts' => $posts,
             'query' => $query,
+            'latestPosts' => $latestPosts,
         ]);
     }
 }

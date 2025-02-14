@@ -53,3 +53,9 @@ a_propos_de_nous:
 contact:
   path: /contact
   controller: App\Controller\ContactController::contact
+
+post_search:
+    path: /search
+    controller: App\Controller\HomeController::home
+    methods: GET
+

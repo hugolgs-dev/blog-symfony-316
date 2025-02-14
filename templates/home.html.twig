@@ -1,29 +1,42 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Accueil{% endblock %}
+{% block title %}Accueil
+{% endblock %}
 
 {% block body %}
-    <h1 class="text-3xl font-semibold mb-6">Page d'accueil</h1>
-    
-    {% if app.user %}
-        <!-- Si l'utilisateur est connecté -->
-        <p class="text-lg">Bonjour, {{ app.user.email }} !</p>
-        <a href="{{ path('app_logout') }}" class="text-blue-600 hover:text-blue-800 underline">Se déconnecter</a>
+	<div
+		class="max-w-4xl p-6 mx-auto mt-10">
 
-        {% if 'ROLE_ADMIN' in app.user.roles %}
-            <!-- Si l'utilisateur a le rôle d'administrateur -->
-            <a href="{{ path('admin_dashboard') }}" class="text-blue-600 hover:text-blue-800 underline ml-4">Accéder à l'administration</a>
-        {% endif %}
+		<!-- Barre de recherche -->
+		<div class="mb-6">
+			<form action="{{ path('post_search') }}" method="get">
+				<input type="text" name="q" placeholder="Rechercher un post..." class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" value="{{ query|default('') }}">
+			</form>
+		</div>
 
-    {% else %}
-        <!-- Si l'utilisateur n'est pas connecté -->
-        <a href="{{ path('app_login') }}" class="text-blue-600 hover:text-blue-800 underline">Se connecter</a> |
-        <a href="{{ path('app_register') }}" class="text-blue-600 hover:text-blue-800 underline ml-4">S'inscrire</a>
-    {% endif %}
+		<!-- Résultats de recherche -->
+		<div>
+			{% if query is not empty %}
+				<h1>Résultats de recherche pour "{{ query }}"</h1>
+			{% endif %}
 
-    <!-- Le lien vers "À propos de nous" est accessible pour tout le monde -->
-    <p class="mt-4">En savoir plus sur notre équipe et notre mission sur notre page <a href="{{ path('a_propos_de_nous') }}" class="text-blue-600 hover:text-blue-800 underline">À propos de nous</a>.</p>
-    <p>Vous souhaitez nous contacter ? Cliquez <a href="{{ path('contact') }}" class="text-blue-600 hover:text-blue-800 underline">ici</a>.</p>
+			{% if  posts is  empty %}
+				<p>Aucun résultat trouvé.</p>
 
+			{% else %}
+				<ul class="mt-4 space-y-4">
+					{% for post in posts %}
+						<li class="p-4 bg-white border border-gray-300 rounded-lg shadow">
+							<a href="{{ path('post_show', {'id': post.id}) }}" class="text-lg font-bold text-blue-600 hover:underline">
+								{{ post.title }}
+							</a>
+							<p class="text-gray-700">{{ post.content[:100] }}...</p>
+						</li>
+					{% endfor %}
+				</ul>
+			{% endif %}
+		</div>
+
+	</div>
 {% endblock %}
 

@@ -18,21 +18,6 @@ app_user_index:
     path: /users
     controller: App\Controller\UserController::index
 
-app_user_new:
-    path: /users/create
-    controller: App\Controller\UserController::new
-
-app_user_show:
-    path: /users/{id}  # Utilisation de {id} au lieu de :id
-    controller: App\Controller\UserController::show    
-
-app_user_edit:
-    path: /users/{id}/edit  # Utilisation de {id} au lieu de :id et ajout d'un "edit" explicite
-    controller: App\Controller\UserController::edit        
-
-app_user_delete:
-    path: /users/{id}/delete  # Utilisation de {id} au lieu de :id et ajout d'un "delete" explicite
-    controller: App\Controller\UserController::delete
 
 admin_dashboard:
     path: /admin
@@ -46,6 +31,10 @@ comments_crud:
     path: /comment
     controller: App\Controller\Admin\CommentCrudController::index
 
+
+users_crud:
+    path: /users
+    controller: App\Controller\Admin\UserCrudController::index
 app_actus:
     path: /actus
     controller: App\Controller\AffichagePostController::index
@@ -66,7 +55,7 @@ contact:
 
 post_search:
     path: /search
-    controller: App\Controller\HomeController::home
+    controller: App\Controller\Admin\PostCrudController::home
     methods: GET
 
 

@@ -12,7 +12,9 @@
         <article class="mb-4 border shadow px-4 py-2">
             <h2 class="font-bold text-xl text-center mb-2">{{ post.title }}</h2>
 			<p>{{ post.content|split(' ')|slice(0, 20)|join(' ') ~ '...' }}</p>
-            <p class="text-indigo-600 underline cursor-pointer hover:text-indigo-700 visited:text-gray-500"><a href="">Lire la suite</a></p>
+            <p class="text-indigo-600 underline cursor-pointer hover:text-indigo-700 visited:text-gray-500">
+				<a href="{{ path('app_actus_post', {'id': post.id}) }}">Lire la suite</a>
+			</p>
             <p><small>Publié le {{ post.createdAt|date('d/m/Y') }}</small></p>
             <p><small>Par {{ post.author }}</small></p>
         </article>

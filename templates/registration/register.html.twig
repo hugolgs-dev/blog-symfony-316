@@ -1,9 +1,8 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}S'inscrire{% endblock %}
-
 {% block body %}
-<div class="flex items-center justify-center min-h-screen bg-gray-100">
+<div class="flex justify-center mt-8 bg-gray-100">
     <div class="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-lg">
         <h1 class="text-2xl font-bold text-center text-gray-700">S'inscrire</h1>
 
@@ -47,10 +46,11 @@
                 {{ form_label(registrationForm.isAdmin, 'Êtes-vous administrateur ?', {'attr': {'class': 'text-sm text-gray-700'}}) }}
             </div>
 
-            <button type="submit" class="w-full py-2 bg-indigo-600 text-white font-semibold rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 mt-4">
+            <button type="submit" class="w-full py-2 mt-4 font-semibold text-white bg-indigo-600 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">
                 S'inscrire
             </button>
         {{ form_end(registrationForm) }}
     </div>
 </div>
 {% endblock %}
+

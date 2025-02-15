@@ -3,7 +3,13 @@
 {% block title %}Accueil{% endblock %}
 
 {% block body %}
-    <h1>Page d'accueil</h1>
+    <div class="max-w-4xl p-6 mx-auto mt-10">
+        <div class="mb-6">
+            <form action="{{ path('post_search') }}" method="get">
+                <input type="text" name="q" placeholder="Rechercher un post..." class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" value="{{ query|default('') }}">
+            </form>
+        </div>
+    </div>
     <div class="last-post mt-5 px-3">
     <h2 class="text-2xl font-bold text-gray-400 border-b-2 pb-3">Les derniers articles</h2>
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-3">
@@ -24,49 +30,4 @@
     </div>
     <p class="text-center text-indigo-600 underline cursor-pointer"><a href="{{ path('app_actus') }}">Voir tous les articles</a></p>
 
-	<div
-		class="max-w-4xl p-6 mx-auto mt-10">
-
-    <!-- Barre de recherche -->
-    <div class="mb-6">
-        <form action="{{ path('post_search') }}" method="get">
-            <input type="text" name="q" placeholder="Rechercher un post..." class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" value="{{ query|default('') }}">
-        </form>
-    </div>
-
-    <!-- Résultats de recherche ou derniers articles -->
-    <div>
-        {% if query is not empty %}
-            <h1>Résultats de recherche pour "{{ query }}"</h1>
-        {% endif %}
-
-        {% if latestPosts is empty %}
-            <p>Aucun article trouvé.</p>
-        {% else %}
-            <div class="px-3 mt-5 last-post">
-                <h2 class="pb-3 text-2xl font-bold text-gray-400 border-b-2">
-                    {% if query is not empty %}
-                        Résultats de recherche
-                    {% else %}
-                        Les derniers articles
-                    {% endif %}
-                </h2>
-                <div class="grid grid-cols-1 gap-4 mt-3 md:grid-cols-3">
-                    {% for post in latestPosts %}
-                        <article class="px-4 py-2 mb-4 border shadow">
-                            <h2 class="mb-2 text-xl font-bold text-center">{{ post.title }}</h2>
-                            <p>{{ post.content }}</p>
-                            <p class="text-indigo-600 underline cursor-pointer hover:text-indigo-700 visited:text-gray-500">
-                                <a href="#">Lire la suite</a>
-                            </p>
-                            <p><small>Publié le {{ post.createdAt|date('d/m/Y') }}</small></p>
-                            <p><small>Par {{ post.author }}</small></p>
-                        </article>
-                    {% endfor %}
-                </div>
-            </div>
-        {% endif %}
-    </div>
-
-</div>
 {% endblock %}

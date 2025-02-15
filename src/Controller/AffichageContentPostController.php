@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Comment;
 use App\Entity\Post;
 use App\Form\CommentType;
+use App\Utils\TextFormatter;
 use App\Repository\CommentRepository;
 use App\Repository\PostRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -26,7 +27,6 @@ class AffichageContentPostController extends AbstractController
     ): Response
     {
         $post = $postRepository->find($id);
-        //$comments = $commentsRepository->findBy(['post' => $post], ['createdAt' => 'DESC']);
 
         if (!$post) {
             throw $this->createNotFoundException("Post non trouvé!");
@@ -37,27 +37,6 @@ class AffichageContentPostController extends AbstractController
         $comment = new Comment();
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
-
-        /*
-        if ($form->isSubmitted()) {
-            dump('Formulaire soumis');
-            if ($form->isValid()) {
-                dump('Formulaire valide');
-                // Processus d'ajout du commentaire
-            } else {
-                dump('Formulaire invalide');
-            }
-        }
-*/
-        /*
-        if ($form->isSubmitted()) {
-            dd('Formulaire soumis'); // Vérifie si le formulaire est bien soumis
-        }
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            dd('Formulaire valide'); // Vérifie si le formulaire est valide
-        }*/
-
 
         if($form->isSubmitted() && $form->isValid()){
 
@@ -78,8 +57,11 @@ class AffichageContentPostController extends AbstractController
             return $this->redirectToRoute('app_actus_post', ['id' => $post->getId()]);
         }
 
+        $formattedContent = TextFormatter::formatTextToHtml($post->getContent());
+
         return $this->render('posts/index.html.twig', [
             'post' => $post,
+            'formattedContent' => $formattedContent,
             'comments' => $comments,
             'commentForm' => $form->createView(),
         ]);

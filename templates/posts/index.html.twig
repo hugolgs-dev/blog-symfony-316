@@ -7,7 +7,7 @@
         <h1 class="text-3xl font-bold mb-4">{{ post.title }}</h1>
         <p class="italic text-gray-600">Publié le {{ post.createdAt|date('d/m/Y') }} par {{ post.author }}</p>
         <div class="mt-4">
-            <p class="leading-relaxed">{{ post.content|nl2br }}</p>
+            {{ formattedContent|raw }}
         </div>
         <p class="mt-5 underline text-blue-600 hover:text-blue-800">
             <a href="{{ path('app_actus') }}">← Retour aux articles</a>

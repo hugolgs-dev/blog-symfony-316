@@ -3,40 +3,45 @@
 {% block title %} {{ post.title }} {% endblock %}
 
 {% block body %}
-    <div class="container-fluid mx-auto mt-5 px-3">
-        <h1 class="text-xxl-start fa-font-awesome mb-4">{{ post.title }}</h1>
-        <p class="fst-italic">Publié le {{ post.createdAt|date('d/m/Y') }} par {{ post.author }}</p>
+    <div class="max-w-4xl mx-auto mt-5 px-4">
+        <h1 class="text-3xl font-bold mb-4">{{ post.title }}</h1>
+        <p class="italic text-gray-600">Publié le {{ post.createdAt|date('d/m/Y') }} par {{ post.author }}</p>
         <div class="mt-4">
-            <p>{{ post.content|nl2br }}</p>
+            <p class="leading-relaxed">{{ post.content|nl2br }}</p>
         </div>
-        <p class="mt-5 text-decoration-underline">
+        <p class="mt-5 underline text-blue-600 hover:text-blue-800">
             <a href="{{ path('app_actus') }}">← Retour aux articles</a>
         </p>
     </div>
 
-    <h2>Commentaires</h2>
+    <div class="max-w-4xl mx-auto mt-8 px-4">
+        <h2 class="text-2xl font-semibold">Commentaires</h2>
 
-    {% if app.user %}
-        {{ form_start(commentForm) }}
-        {{ form_row(commentForm.content) }}
-        {{ form_row(commentForm.submit) }}
-        {{ form_end(commentForm) }}
-    {% else %}
-        <p><a href="{{ path('app_login') }}">Connectez-vous</a> pour poster un commentaire.</p>
-    {% endif %}
+        {% if app.user %}
+            <div class="mt-4">
+                {{ form_start(commentForm, {'attr': {'class': 'space-y-4'}}) }}
+                {{ form_row(commentForm.content, {'attr': {'class': 'w-full p-2 border rounded-md'}}) }}
+                {{ form_row(commentForm.submit, {'attr': {'class': 'bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700'}}) }}
+                {{ form_end(commentForm) }}
+            </div>
+        {% else %}
+            <p class="mt-4 text-gray-700">
+                <a href="{{ path('app_login') }}" class="text-blue-600 hover:text-blue-800">Connectez-vous</a> pour poster un commentaire.
+            </p>
+        {% endif %}
 
-    {{ dump(comments) }}
-    {% for comment in comments %}
-        <div class="border p-3 mt-3">
-            <p><strong>{{ comment.user.username }}</strong> - <small>{{ comment.createdAt|date('d/m/Y H:i') }}</small></p>
-            <p>{{ comment.content }}</p>
-            <form action="{{ path('app_comment_report', {'id': comment.id}) }}" method="post" class="d-inline">
-                <button type="submit" class="btn btn-sm btn-warning">🚨 Signaler</button>
-            </form>
-        </div>
-    {% else %}
-        <p>Aucun commentaire pour l'instant.</p>
-    {% endfor %}
+        {% for comment in comments %}
+            <div class="border p-4 mt-4 rounded-md bg-gray-100">
+                <p class="font-semibold">{{ comment.user.username }} - <span class="text-sm text-gray-500">{{ comment.createdAt|date('d/m/Y H:i') }}</span></p>
+                <p class="mt-2">{{ comment.content }}</p>
+                <form action="{{ path('app_comment_report', {'id': comment.id}) }}" method="post" class="inline-block mt-2">
+                    <button type="submit" class="bg-red-500 text-white text-sm px-3 py-1 rounded-md hover:bg-red-600">🚨 Signaler</button>
+                </form>
+            </div>
+        {% else %}
+            <p class="mt-4 text-gray-600">Aucun commentaire pour l'instant.</p>
+        {% endfor %}
 
-    <p>Un commentaire déplaisant? Signalez-le!</p>
+        <p class="mt-6 text-gray-700">Un commentaire déplaisant ? Signalez-le !</p>
+    </div>
 {% endblock %}

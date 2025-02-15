@@ -34,6 +34,7 @@ comments_crud:
 users_crud:
     path: /users
     controller: App\Controller\Admin\UserCrudController::index
+
 app_actus:
     path: /actus
     controller: App\Controller\AffichagePostController::index

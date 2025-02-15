@@ -16,7 +16,7 @@ use App\Entity\User;
 
 class DashboardController extends AbstractDashboardController
 {
-    private $authChecker;
+    private AuthorizationCheckerInterface $authChecker;
 
     public function __construct(AuthorizationCheckerInterface $authChecker)
     {
@@ -31,8 +31,9 @@ class DashboardController extends AbstractDashboardController
             //ajoute un message flash indiquant que l'utilisateur n'a pas accès
             $this->addFlash('error', 'Vous n\'êtes pas administrateur, vous n\'avez pas le droit d\'accéder à cette page.');
 
-            //redirige vers la page d'accueil
-            return $this->redirectToRoute('home');
+            // si utilisateur pas connecté => redirige vers page de connexion
+            return $this->redirectToRoute('app_login');
+
         }
 
         //si l'utilisateur est un administrateur, affiche le tableau de bord

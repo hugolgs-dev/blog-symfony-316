@@ -13,6 +13,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class AffichageContentPostController extends AbstractController
 {
@@ -66,4 +68,29 @@ class AffichageContentPostController extends AbstractController
             'commentForm' => $form->createView(),
         ]);
     }
+
+  
+    #[Route('/comment/report/{id}', name: 'app_comment_report')]
+    public function reportComment(int $id, EntityManagerInterface $entityManager): RedirectResponse
+    {
+        $comment = $entityManager->getRepository(Comment::class)->find($id);
+    
+        if (!$comment) {
+            throw $this->createNotFoundException('Comment not found.');
+        }
+    
+        $postId = $comment->getPost()->getId();
+    
+        if (!$comment->isReported()) {
+            $comment->setIsReported(true);
+            $entityManager->persist($comment);
+            $entityManager->flush();
+            $this->addFlash('success', 'Commentaire signalé avec succès.');
+        } else {
+            $this->addFlash('warning', "Ce commentaire a déjà été signalé");
+        }
+    
+        return $this->redirectToRoute('app_actus_post', ['id' => $postId]);
+    }
+    
 }

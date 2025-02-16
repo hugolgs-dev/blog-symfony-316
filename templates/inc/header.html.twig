@@ -12,7 +12,7 @@
         <h1 class="text-2xl font-extrabold">Site Symfony 316</h1>
         
         <nav class="space-x-6">
-        <a href="{{ path('home') }}" class="mx-2">Retourner à l'accueil</a>
+        {# <a href="{{ path('home') }}" class="mx-2">Retourner à l'accueil</a> #}
             <a href="/" class="text-white hover:underline">Accueil</a>
             <a href="/contact" class="text-white hover:underline">Contact</a>
             <a href="/a-propos-de-nous" class="text-white hover:underline">À propos</a>
@@ -27,14 +27,14 @@
             {% if app.user %}
                 <p class="inline-block mr-4">Bonjour, <span class="font-semibold">{{ app.user.email }}</span> !</p>
                 <a href="{{ path('app_logout') }}"
-                   class="px-4 py-2 text-white transition-all duration-300 border border-white rounded-lg hover:bg-white hover:text-indigo-600">Se déconnecter</a>
+                   class="px-4 py-2 text-white transition-all duration-300 border border-white hover:bg-white hover:text-indigo-600">Se déconnecter</a>
 
 
             {% else %}
                 <a href="{{ path('app_login') }}" 
-                   class="px-4 py-2 text-white transition-all duration-300 border border-white rounded-lg hover:bg-white hover:text-indigo-600">Se connecter</a>
+                   class="px-4 py-2 text-white transition-all duration-300 border border-white hover:bg-white hover:text-indigo-600">Se connecter</a>
                 <a href="{{ path('app_register') }}" 
-                   class="px-4 py-2 ml-4 text-white transition-all duration-300 border border-white rounded-lg hover:bg-white hover:text-indigo-600">S'inscrire</a>
+                   class="px-4 py-2 ml-4 text-white transition-all duration-300 border border-white hover:bg-white hover:text-indigo-600">S'inscrire</a>
             {% endif %}
         </div>
 

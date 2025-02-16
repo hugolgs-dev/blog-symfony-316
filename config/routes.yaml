@@ -46,7 +46,8 @@ app_actus_post:
 
 app_comment_report:
     path: /comment/report/{id}
-
+    controller: App\Controller\AffichageContentPostController::reportComment
+    
 a_propos_de_nous:
   path: /a-propos-de-nous
   controller: App\Controller\AboutController::aboutUs

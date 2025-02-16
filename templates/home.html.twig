@@ -6,7 +6,7 @@
     <div class="max-w-4xl p-6 mx-auto mt-10">
         <div class="mb-6">
             <form action="{{ path('post_search') }}" method="get">
-                <input type="text" name="q" placeholder="Rechercher un post..." class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" value="{{ query|default('') }}">
+                <input type="text" name="q" placeholder="Rechercher un article..." class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" value="{{ query|default('') }}">
             </form>
         </div>
     </div>

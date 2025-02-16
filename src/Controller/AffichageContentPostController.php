@@ -31,7 +31,7 @@ class AffichageContentPostController extends AbstractController
         $post = $postRepository->find($id);
 
         if (!$post) {
-            throw $this->createNotFoundException("Post non trouvé!");
+            throw $this->createNotFoundException("Article non trouvé!");
         }
 
         $comments = $post->getComments()->toArray();
@@ -76,7 +76,7 @@ class AffichageContentPostController extends AbstractController
         $comment = $entityManager->getRepository(Comment::class)->find($id);
     
         if (!$comment) {
-            throw $this->createNotFoundException('Comment not found.');
+            throw $this->createNotFoundException('Commentaire non-trouvé.');
         }
     
         $postId = $comment->getPost()->getId();

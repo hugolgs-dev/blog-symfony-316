@@ -1,4 +1,4 @@
-name: app
+name: blog-symfony
 
 type: php:8.3
 
@@ -11,7 +11,7 @@ runtime:
         - iconv
         
 relationships:
-    database: "database:mysqld"
+    mysql:
 
 #variables:
 #    php:

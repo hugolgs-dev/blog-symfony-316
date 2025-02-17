@@ -9,15 +9,12 @@ runtime:
         - sodium
         - ctype
         - iconv
-        
+
 relationships:
-    mysql:
+    mysql: "mysql:mysql"
 
 variables:
     DATABASE_URL: "mysql://user:@mysql.internal:3306/main"
-#    php:
-#        # uncomment on PHP 7.4+
-#        #opcache.preload: config/preload.php
 
 build:
     flavor: none
@@ -33,7 +30,7 @@ web:
 
 mounts:
     "/var/cache": { source: local, source_path: var/cache }
-    
+
 
 hooks:
     build: |

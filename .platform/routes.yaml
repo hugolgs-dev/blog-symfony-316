@@ -1,2 +1,2 @@
-"https://{all}/": { type: upstream, upstream: "blog-symfony:http" }
+"https://{all}/": { type: upstream, upstream: "blog-symfony:https" }
 "http://{all}/": { type: redirect, to: "https://{all}/" }

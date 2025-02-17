@@ -14,7 +14,6 @@ relationships:
     mysql:
 
 variables:
-    env:
     DATABASE_URL: "mysql://user:@mysql.internal:3306/main"
 #    php:
 #        # uncomment on PHP 7.4+

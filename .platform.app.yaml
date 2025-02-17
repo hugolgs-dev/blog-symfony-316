@@ -10,7 +10,7 @@ runtime:
         - ctype
         - iconv
         
-relationship:
+relationships:
     database: "database:mysql"
 
 #variables:

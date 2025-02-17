@@ -14,7 +14,8 @@ relationships:
     mysql: "mysql:mysql"
 
 variables:
-    DATABASE_URL: "mysql://user:@mysql.internal:3306/main"
+    env:
+        DATABASE_URL: "mysql://user:@mysql.internal:3306/main"
 
 build:
     flavor: none

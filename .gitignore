@@ -9,7 +9,9 @@
 /vendor/
 ###< symfony/framework-bundle ###
 
-/migrations
+/migrations/*
+!/migrations/
+
 
 ###> phpunit/phpunit ###
 /phpunit.xml

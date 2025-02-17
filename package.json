@@ -1,0 +1,26 @@
+{
+  "name": "blog-316",
+  "version": "1.0.0",
+  "description": "test",
+  "main": "tailwind.config.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hugolgs-dev/blog-symfony-316.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hugolgs-dev/blog-symfony-316/issues"
+  },
+  "homepage": "https://github.com/hugolgs-dev/blog-symfony-316#readme",
+  "dependencies": {
+    "tailwindcss": "^4.0.6"
+  }
+}

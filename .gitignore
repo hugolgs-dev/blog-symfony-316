@@ -9,10 +9,6 @@
 /vendor/
 ###< symfony/framework-bundle ###
 
-/migrations/*
-!/migrations/
-
-
 ###> phpunit/phpunit ###
 /phpunit.xml
 .phpunit.result.cache

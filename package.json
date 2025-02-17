@@ -6,6 +6,10 @@
   "directories": {
     "test": "tests"
   },
+  "dependencies": {
+    "tailwindcss": "^4.0.6"
+  },
+  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -19,8 +23,5 @@
   "bugs": {
     "url": "https://github.com/hugolgs-dev/blog-symfony-316/issues"
   },
-  "homepage": "https://github.com/hugolgs-dev/blog-symfony-316#readme",
-  "dependencies": {
-    "tailwindcss": "^4.0.6"
-  }
+  "homepage": "https://github.com/hugolgs-dev/blog-symfony-316#readme"
 }
